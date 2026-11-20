@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Fraunces Variable", ui-serif, Georgia, serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-series: var(--series-1);
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.975 0.008 85);
+  --foreground: oklch(0.22 0.03 200);
+  --card: oklch(0.995 0.004 85);
+  --card-foreground: oklch(0.22 0.03 200);
+  --primary: oklch(0.42 0.08 190);
+  --primary-foreground: oklch(0.98 0.01 85);
+  --secondary: oklch(0.93 0.02 170);
+  --secondary-foreground: oklch(0.28 0.05 195);
+  --muted: oklch(0.945 0.01 85);
+  --muted-foreground: oklch(0.48 0.025 200);
+  --accent: oklch(0.88 0.08 60);
+  --accent-foreground: oklch(0.3 0.06 50);
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.98 0.01 85);
+  --border: oklch(0.9 0.012 85);
+  --input: oklch(0.86 0.012 85);
+  --ring: oklch(0.42 0.08 190);
+
+  --sidebar: oklch(0.24 0.04 200);
+  --sidebar-foreground: oklch(0.92 0.015 85);
+  --sidebar-primary: oklch(0.82 0.1 70);
+  --sidebar-accent: oklch(0.31 0.045 200);
+  --sidebar-border: oklch(0.33 0.04 200);
+
+  /* Data-viz: one validated series hue + reserved status colours */
+  --series-1: #2a78d6;
+  --grid: oklch(0.92 0.01 85);
+  --status-good: #0ca30c;
+  --status-info: #2a78d6;
+  --status-warning: #e09a00;
+  --status-critical: #d03b3b;
+  --status-neutral: #8a8a85;
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { -webkit-tap-highlight-color: transparent; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator { opacity: 0.55; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--color-ring); outline-offset: 2px; }
+}
+
+@layer utilities {
+  .tabular { font-variant-numeric: tabular-nums; }
+  .animate-in { animation: fade-in 180ms ease-out; }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes content-in { from { opacity: 0; transform: translate(-50%, -48%) scale(0.97); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+.dialog-overlay[data-state="open"] { animation: overlay-in 150ms ease-out; }
+.dialog-content[data-state="open"] { animation: content-in 180ms ease-out; }
+
+/* Recharts focus outline off — keyboard users get the table view */
+.recharts-surface:focus, .recharts-wrapper:focus { outline: none; }
